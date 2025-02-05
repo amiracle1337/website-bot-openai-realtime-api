@@ -8,37 +8,35 @@
   font-weight: 400;
   font-style: normal;
   border: none;
-  background-color: #ececf1;
-  color: #101010;
-  border-radius: 1000px;
-  padding: 12px 24px;
-  transition: 0.3s ease-in-out;
+  background-color: #333333;
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 10px 20px;
+  transition: 0.2s ease;
   outline: none;
 
   &.button-style-action {
-    background-color: #ffffff;
-    color: #000000;
-    box-shadow: 0 0 20px rgb(255 255 255 / 59%);
+    background-color: #000000;
+    color: #ffffff;
     &:hover:not([disabled]) {
-      background-color: #f8f82b;
-      box-shadow: 0 0 25px rgba(255, 238, 0, 0.59);
-      padding: 14px 30px;
+      background-color: #333333;
     }
   }
 
   &.button-style-alert {
     background-color: #f00;
-    color: #ececf1;
+    color: #ffffff;
     &:hover:not([disabled]) {
-      background-color: #f00;
+      background-color: #cc0000;
     }
   }
 
   &.button-style-flush {
-    background-color: rgba(255, 255, 255, 0);
+    background-color: transparent;
   }
 
   &[disabled] {
+    opacity: 0.5;
     color: #999;
   }
 
@@ -47,7 +45,7 @@
   }
 
   &:hover:not([disabled]) {
-    background-color: #d8d8d8;
+    background-color: #444444;
   }
 
   &:active:not([disabled]) {
@@ -57,10 +55,10 @@
   .icon {
     display: flex;
     &.icon-start {
-      margin-left: -8px;
+      margin-left: -4px;
     }
     &.icon-end {
-      margin-right: -8px;
+      margin-right: -4px;
     }
     svg {
       width: 16px;

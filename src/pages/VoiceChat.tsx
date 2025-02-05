@@ -26,15 +26,19 @@ export const VoiceChat: React.FC<Props> = ({ scrapedContent }) => {
     localStorage.setItem('tmp::voice_api_key', apiKey);
   }
 
+  const username = 'amir';
+
   const instructions = `SYSTEM SETTINGS:
+  
 ------
 INSTRUCTIONS:
-- You will receive website data about a product.
-- You are an artificial intelligence agent responsible to qualify leads and see if they are good fit for the product.
-- Please make sure to respond with a helpful voice via audio
-- Your response should be concise and to the point, keep it short, less than 200 characters max.
-- You can ask the user questions
-- Be open to exploration and conversation
+IMPORTANT: Do not make ANY initial statement when the conversation starts. Stay completely silent until the user asks a question or makes a statement.
+Once the user speaks:
+- Never use greetings
+- Never say you're ready or listening
+- Never say "I'm here" or similar phrases
+- Simply respond directly to what the user says
+Always use the username (${username}) in your responses. Respond only in english. Keep it short and concise.
 
 ------
 PERSONALITY:
@@ -113,10 +117,22 @@ ${scrapedContent}
 
     // Connect to realtime API
     await client.connect();
+
+    // FIRST update the session with instructions
+    await client.updateSession({
+      instructions,
+      input_audio_transcription: { model: 'whisper-1' },
+      voice: 'alloy',
+      modalities: ['text', 'audio'],
+      input_audio_format: 'pcm16',
+      output_audio_format: 'pcm16',
+    });
+
+    // THEN send the initial message
     client.sendUserMessageContent([
       {
         type: `input_text`,
-        text: `Hello!`, // Can change this initial text
+        text: `hi`, // Simple trigger for initial greeting
       },
     ]);
 
@@ -257,10 +273,6 @@ ${scrapedContent}
     const wavStreamPlayer = wavStreamPlayerRef.current;
     const client = clientRef.current;
 
-    client.updateSession({ instructions: instructions });
-    client.updateSession({ input_audio_transcription: { model: 'whisper-1' } });
-    client.updateSession({ voice: 'alloy' });
-
     client.on('error', (event: any) => console.error(event));
     client.on('conversation.interrupted', async () => {
       const trackSampleOffset = await wavStreamPlayer.interrupt();
@@ -299,15 +311,11 @@ ${scrapedContent}
   return (
     <div data-component="VoiceChat">
       <div className="content-top">
-        <div className="content-title">
-          <span>AI Voice Agent</span>
-        </div>
         <div className="content-api-key">
           {!USE_LOCAL_RELAY_SERVER_URL && (
             <Button
               icon={Edit}
               iconPosition="end"
-              buttonStyle="flush"
               label={`api key: ${apiKey.slice(0, 3)}...`}
               onClick={() => resetAPIKey()}
             />

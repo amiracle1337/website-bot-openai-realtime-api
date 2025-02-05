@@ -56,7 +56,7 @@
         position: relative;
       }
       .content-block-body {
-        color: #6e6e7f;
+        color: hsl(0, 0%, 100%);
         position: relative;
         flex-grow: 1;
         padding: 8px 0px;
@@ -184,14 +184,14 @@
       flex-shrink: 0;
       margin-right: 16px;
       &.user {
-        color: #0099ff;
+        color: #000000;
       }
       &.assistant {
-        color: #fff700;
+        color: #000000;
       }
     }
     .speaker-content {
-      color: #ffffff;
+      color: #000000;
       overflow: hidden;
       word-wrap: break-word;
 
@@ -273,7 +273,7 @@
       max-width: 200px;
       gap: 4px;
       &.client {
-        color: #0099ff;
+        color: #0c9d29;
       }
       &.server {
         color: #fff700;
